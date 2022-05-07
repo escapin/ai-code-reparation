@@ -1,3 +1,7 @@
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+
 import openai
 
 
@@ -9,7 +13,7 @@ openai.api_key = api_key
 
 def sentiment_anaysis_check(customer_review):
     # read the GPT-3 designed prompt
-    with open("./sentiment_analysis_prompt.txt") as f:
+    with open("openai_prompts/sentiment_analysis_prompt.txt") as f:
         prompt = f.read()
 
     # predifined colours
@@ -49,3 +53,28 @@ def sentiment_anaysis_check(customer_review):
         return "VERY NEGATIVE", colours["red"]
     else:
         return "UNSURE", colours["white"]
+
+
+def callback1(app):
+    @app.callback(
+        dash.dependencies.Output("output-container", "children"),
+        [
+            dash.dependencies.Input("submit-button", "n_clicks"),
+            dash.dependencies.State("input", "value"),
+        ],
+    )
+    def update_output(n_clicks, customer_review):
+        if n_clicks > 0:
+            sentiment, sentiment_colour = sentiment_anaysis_check(customer_review)
+            return html.Div(
+                [
+                    html.H1(f"The Feedback is {sentiment}"),
+                    html.Div(
+                        style={
+                            "background-color": sentiment_colour,
+                            "width": "100%",
+                            "height": "300px",
+                        }
+                    ),
+                ]
+            )
