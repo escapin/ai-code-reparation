@@ -9,8 +9,7 @@ to automatically find bugs on your code.
 - `pip install openai`
 
 # Build and Test
-1. Create the file `api_key.txt` in the root directory and put your OpenAI 
-API key
-from [https://beta.openai.com/account/api-keys](https://beta.openai.com/account/api-keys).
+1. Create the file `api_key.txt` in the root directory of this project and put your OpenAI API key from 
+   [https://beta.openai.com/account/api-keys](https://beta.openai.com/account/api-keys).
 
 2. Execute `web_app.py` to run the web app on `localhost:8050`
