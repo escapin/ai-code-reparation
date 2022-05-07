@@ -3,6 +3,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
+import dash_ace
 
 
 def frontend(app):
@@ -39,15 +40,21 @@ def frontend(app):
                     dbc.Row(
                         [
                             dbc.Col(
-                                dcc.Textarea(
+                                dash_ace.DashAceEditor(
                                     id="input",
+                                    theme="github",
+                                    mode="python",
+                                    tabSize=4,
                                     placeholder="Enter your code here...",
                                     style={"width": "100%", "height": "300px"},
                                 )
                             ),
                             dbc.Col(
-                                dcc.Textarea(
+                                dash_ace.DashAceEditor(
                                     id="fixed-code",
+                                    theme="github",
+                                    mode="python",
+                                    tabSize=4,
                                     placeholder="Your fixed code here...",
                                     style={"width": "100%", "height": "300px"},
                                 )
