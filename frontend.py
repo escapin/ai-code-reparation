@@ -40,21 +40,15 @@ def frontend(app):
                     dbc.Row(
                         [
                             dbc.Col(
-                                dash_ace.DashAceEditor(
+                                dcc.Textarea(
                                     id="input",
-                                    theme="github",
-                                    mode="python",
-                                    tabSize=4,
                                     placeholder="Enter your code here...",
                                     style={"width": "100%", "height": "300px"},
                                 )
                             ),
                             dbc.Col(
-                                dash_ace.DashAceEditor(
+                                dcc.Textarea(
                                     id="fixed-code",
-                                    theme="github",
-                                    mode="python",
-                                    tabSize=4,
                                     placeholder="Your fixed code here...",
                                     style={"width": "100%", "height": "300px"},
                                 )
