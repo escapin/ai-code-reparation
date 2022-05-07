@@ -6,6 +6,7 @@ to automatically find bugs on your code.
 - python (tested with python3.10)
 - pip (tested with 21.2)
 - `pip install dash`
+- `pip install dash_ace`
 - `pip install openai`
 
 # Build and Test
