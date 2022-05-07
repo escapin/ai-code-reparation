@@ -1,6 +1,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 
 
 def frontend(app):
@@ -19,7 +20,7 @@ def frontend(app):
             html.Div(
                 [
                     html.H1(
-                        children="Customer Review PoC",
+                        children="AI-enhanced code analysis and performance",
                         style={
                             "text-align": "center",
                             "font-family": "helvetica",
@@ -34,16 +35,24 @@ def frontend(app):
             ),
             html.Div(
                 [
-                    dcc.Input(
-                        id="input",
-                        type="text",
-                        placeholder="Enter customer review here...",
-                        style={"width": "100%", "height": "300px"},
+                    dbc.Row(
+                        [
+                            dbc.Col(dcc.Textarea(
+                                id="input",
+                                placeholder="Enter your code here...",
+                                style={"width": "100%", "height": "300px"},
+                            )),
+                            dbc.Col(dcc.Textarea(
+                                id="fixed-code",
+                                placeholder="Your fixed code here...",
+                                style={"width": "100%", "height": "300px"},
+                            ))
+                        ],
                     ),
                     html.Button(
                         id="submit-button",
                         n_clicks=0,
-                        children="Submit Review",
+                        children="Check code",
                         style={
                             "background-color": "lightblue",
                             "border": "none",

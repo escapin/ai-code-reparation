@@ -11,48 +11,26 @@ with open("./api_key.txt") as f:
 openai.api_key = api_key
 
 
-def sentiment_anaysis_check(customer_review):
-    # read the GPT-3 designed prompt
-    with open("openai_prompts/sentiment_analysis_prompt.txt") as f:
-        prompt = f.read()
+def find_bugs(code):
+    if code == None:
+        return "Please, specify some code"
 
-    # predifined colours
-    colours = {
-        "green": "#00FF00",
-        "yellow": "#FFFF00",
-        "red": "#FF0000",
-        "white": "#FFFFFF",
-    }
-
-    if customer_review == None:
-        return "No Review to check, silly human. Buzz buzz!", colours["white"]
-
-    prompt = prompt + customer_review + "\nSentiment Analysis Result:"
+    prompt = "##### Point bugs in the below function\n" + code + "\n##### Bugs:"
 
     response = openai.Completion.create(
-        engine="text-davinci-002",
+        engine="code-davinci-002",
         prompt=prompt,
-        temperature=0.7,
-        max_tokens=20,
+        temperature=0,
+        max_tokens=100,
         top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
+        frequency_penalty=1,
+        presence_penalty=1,
+        stop=["####"]
     )
 
-    sentiment_analysis_result = response["choices"][0]["text"]
+    find_bugs_result = response["choices"][0]["text"]
 
-    if "VERY POSITIVE" in sentiment_analysis_result:
-        return "VERY POSITIVE", colours["green"]
-    elif "POSITIVE" in sentiment_analysis_result:
-        return "POSITITVE", colours["green"]
-    elif "NEUTRAL" in sentiment_analysis_result:
-        return "NEUTRAL", colours["yellow"]
-    elif "NEGATIVE" in sentiment_analysis_result:
-        return "NEGATIVE", colours["red"]
-    elif "VERY NEGATIVE" in sentiment_analysis_result:
-        return "VERY NEGATIVE", colours["red"]
-    else:
-        return "UNSURE", colours["white"]
+    return find_bugs_result
 
 
 def callback1(app):
@@ -63,18 +41,10 @@ def callback1(app):
             dash.dependencies.State("input", "value"),
         ],
     )
-    def update_output(n_clicks, customer_review):
+    def update_output(n_clicks, code):
         if n_clicks > 0:
-            sentiment, sentiment_colour = sentiment_anaysis_check(customer_review)
+            bug_results = find_bugs(code)
+            bugs = bug_results.strip().split("\n")
             return html.Div(
-                [
-                    html.H1(f"The Feedback is {sentiment}"),
-                    html.Div(
-                        style={
-                            "background-color": sentiment_colour,
-                            "width": "100%",
-                            "height": "300px",
-                        }
-                    ),
-                ]
+                html.Ul(children=[html.Li(bug) for bug in bugs])
             )
