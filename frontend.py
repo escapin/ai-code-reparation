@@ -3,7 +3,6 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
-import dash_ace
 
 
 def frontend(app):
@@ -22,7 +21,7 @@ def frontend(app):
             html.Div(
                 [
                     html.H1(
-                        children="AI-enhanced Code Reparation and Performances",
+                        children="AI-Powered Code Reparation",
                         style={
                             "text-align": "center",
                             "font-family": "helvetica",
@@ -40,54 +39,58 @@ def frontend(app):
                     dbc.Row(
                         [
                             dbc.Col(
-                                dcc.Textarea(
-                                    id="input",
-                                    placeholder="Enter your code here...",
-                                    style={"width": "100%", "height": "300px"},
-                                )
+                                [
+                                    dcc.Textarea(
+                                        id="input",
+                                        placeholder="Enter your code here...",
+                                        style={"width": "100%", "height": "300px"},
+                                    ),
+                                    html.Button(
+                                        id="submit-button",
+                                        n_clicks=0,
+                                        children="Check code",
+                                        style={
+                                            "background-color": "lightblue",
+                                            "border": "none",
+                                            "color": "black",
+                                            "padding": "15px 32px",
+                                            "text-align": "center",
+                                            "text-decoration": "none",
+                                            "display": "inline-block",
+                                            "font-size": "16px",
+                                            "margin": "4px 2px",
+                                            "cursor": "pointer",
+                                        },
+                                    )
+                                ]
                             ),
                             dbc.Col(
-                                dcc.Textarea(
-                                    id="fixed-code",
-                                    placeholder="Your fixed code here...",
-                                    style={"width": "100%", "height": "300px"},
-                                )
+                                [
+                                    dcc.Textarea(
+                                        id="fixed-code",
+                                        placeholder="Your fixed code here...",
+                                        style={"width": "100%", "height": "300px"},
+                                    ),
+                                    html.Button(
+                                        id="apply-button",
+                                        n_clicks=0,
+                                        children="Apply",
+                                        style={
+                                            "background-color": "lightgreen",
+                                            "border": "none",
+                                            "color": "black",
+                                            "padding": "15px 32px",
+                                            "text-align": "center",
+                                            "text-decoration": "none",
+                                            "display": "inline-block",
+                                            "font-size": "16px",
+                                            "margin": "4px 2px",
+                                            "cursor": "pointer",
+                                        },
+                                    )
+                                ]
                             ),
                         ],
-                    ),
-                    html.Button(
-                        id="submit-button",
-                        n_clicks=0,
-                        children="Check code",
-                        style={
-                            "background-color": "lightblue",
-                            "border": "none",
-                            "color": "black",
-                            "padding": "15px 32px",
-                            "text-align": "center",
-                            "text-decoration": "none",
-                            "display": "inline-block",
-                            "font-size": "16px",
-                            "margin": "4px 2px",
-                            "cursor": "pointer",
-                        },
-                    ),
-                    html.Button(
-                        id="apply-button",
-                        n_clicks=0,
-                        children="Apply",
-                        style={
-                            "background-color": "lightgreen",
-                            "border": "none",
-                            "color": "black",
-                            "padding": "15px 32px",
-                            "text-align": "center",
-                            "text-decoration": "none",
-                            "display": "inline-block",
-                            "font-size": "16px",
-                            "margin": "4px 2px",
-                            "cursor": "pointer",
-                        },
                     ),
                     html.Div(id="output-container"),
                 ],
