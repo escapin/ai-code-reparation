@@ -66,7 +66,15 @@ def callback1(app):
             bugs = bug_results.strip().split("\n")
 
             bug_items = map(lambda bug: filter_bug_text(bug), bugs)
+            
+            # TODO: add fixing on click or the error and write on output textblock
+            bug_item = next((bug_item.strip() for bug_item in bug_items if bug_item), None)
+
+            if bug_item:
+                fixed_code = fix_code(code, bug_item)
+
+            # end TODO
 
             return html.Div(
-                html.Ul(children=[html.Li(bug_item.strip(), id="bug-link") for bug_item in bug_items if bug_item])
-            )
+                    html.Ul(children=[html.Li(bug_item.strip(), id="bug-link") for bug_item in bug_items if bug_item])
+                )
