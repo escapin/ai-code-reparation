@@ -157,8 +157,9 @@ def callback2(app):
         ],
     )
     def apply_code_suggestion(apply_button, fixed_code):
-        print(fixed_code)
-        return fixed_code
+        if apply_button > 0:
+            print(fixed_code)
+            return fixed_code
 
 
 def callback3(app):
@@ -181,10 +182,11 @@ def callback3(app):
         ],
     )
     def get_bug_suggestion(fix_button, bugs_checklist, code):
-        print(bugs_checklist)
+        if fix_button > 0:
+            print(bugs_checklist)
 
-        for bug in bugs_checklist:
-            code = fix_code(code, bug)
+            for bug in bugs_checklist:
+                code = fix_code(code, bug)
 
         return code
 
