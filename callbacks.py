@@ -45,6 +45,32 @@ def find_bugs(code):
     return current_result
 
 
+def find_bugs2(code):
+    if code == None:
+        return "Please, specify some code"
+    prompt = "##### Find all the errors in the below code and list only error line\n" + code + "\n\n##### Errors:"
+
+    current_result = ""
+    while True:
+        # print(prompt)
+        response = openai.Completion.create(
+            engine="code-davinci-002",
+            prompt=prompt,
+            temperature=0,
+            max_tokens=50,
+            top_p=1,
+            frequency_penalty=1,
+            presence_penalty=1,
+            stop=["####"],
+        )
+        find_bugs_result = response["choices"][0]["text"]
+        # print(find_bugs_result)
+        if not find_bugs_result.strip():
+            break
+        prompt = prompt + find_bugs_result
+        current_result = current_result + find_bugs_result
+    return current_result
+
 def fix_code(code, bug):
     command = "Fix the following bug: " + bug
 
@@ -156,11 +182,11 @@ def callback2(app):
             dash.dependencies.State("fixed-code", "value"),
         ],
     )
+
     def apply_code_suggestion(apply_button, fixed_code):
         if apply_button > 0:
             print(fixed_code)
             return fixed_code
-
 
 def callback3(app):
     """
