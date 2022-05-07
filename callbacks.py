@@ -118,7 +118,7 @@ def callback1(app):
                     html.Button(
                         id="fix-button",
                         n_clicks=0,
-                        children="Fix Code",
+                        children="2) Fix Code",
                         style={
                             "background-color": "lightgreen",
                             "border": "none",

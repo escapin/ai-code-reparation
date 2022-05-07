@@ -22,7 +22,7 @@ def frontend(app):
             html.Div(
                 [
                     html.H1(
-                        children="AI-enhanced Code Reparation and Performances",
+                        children="AI-powered Code Reparation",
                         style={
                             "text-align": "center",
                             "font-family": "helvetica",
@@ -58,7 +58,7 @@ def frontend(app):
                     html.Button(
                         id="submit-button",
                         n_clicks=0,
-                        children="Check code",
+                        children="1) Check code",
                         style={
                             "background-color": "lightblue",
                             "border": "none",
@@ -75,7 +75,7 @@ def frontend(app):
                     html.Button(
                         id="apply-button",
                         n_clicks=0,
-                        children="Apply",
+                        children="3) Apply",
                         style={
                             "background-color": "lightgreen",
                             "border": "none",
