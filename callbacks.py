@@ -4,6 +4,8 @@ import dash_html_components as html
 
 import openai
 
+import re
+
 
 # load OpenAI API Key
 with open("./api_key.txt") as f:
@@ -32,6 +34,23 @@ def find_bugs(code):
 
     return find_bugs_result
 
+def fix_code(code, bug):
+    command = "Fix the following bug: " + bug
+
+    response = openai.Edit.create(
+        engine="code-davinci-edit-001",
+        input=code,
+        instruction="Fix the following bug: Cursor should be closed after use, but it isn't here",
+        temperature=0,
+        top_p=1
+    )
+
+    fixed_code = response["choices"][0]["text"]
+
+    return fixed_code
+
+def filter_bug_text(line):
+    return next((item for item in re.findall("#?\s?\d\.\s?(.+)", line)), None)
 
 def callback1(app):
     @app.callback(
@@ -45,6 +64,9 @@ def callback1(app):
         if n_clicks > 0:
             bug_results = find_bugs(code)
             bugs = bug_results.strip().split("\n")
+
+            bug_items = map(lambda bug: filter_bug_text(bug), bugs)
+
             return html.Div(
-                html.Ul(children=[html.Li(bug) for bug in bugs])
+                html.Ul(children=[html.Li(bug_item.strip(), id="bug-link") for bug_item in bug_items if bug_item])
             )
