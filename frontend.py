@@ -40,6 +40,7 @@ def frontend(app):
                         [
                             dbc.Col(
                                 [
+                                    html.H2("Original Code"),
                                     dcc.Textarea(
                                         id="input",
                                         placeholder="Enter your code here...",
@@ -66,6 +67,7 @@ def frontend(app):
                             ),
                             dbc.Col(
                                 [
+                                    html.H2("Fixed Code"),
                                     dcc.Textarea(
                                         id="fixed-code",
                                         placeholder="Your fixed code here...",
@@ -74,7 +76,7 @@ def frontend(app):
                                     html.Button(
                                         id="apply-button",
                                         n_clicks=0,
-                                        children="Apply",
+                                        children="🠔 Use as Original Code",
                                         style={
                                             "background-color": "lightgreen",
                                             "border": "none",
