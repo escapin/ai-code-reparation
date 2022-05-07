@@ -87,6 +87,20 @@ def fix_code(code, bug):
     return fixed_code
 
 
+def fix_code2(code, bug):
+    response = openai.Edit.create(
+        engine="code-davinci-edit-001",
+        input=code,
+        instruction=bug,
+        temperature=0,
+        top_p=1,
+    )
+
+    fixed_code = response["choices"][0]["text"]
+
+    return fixed_code
+
+
 def filter_bug_text(line):
     return next((item for item in re.findall("#?\s?\d\.\s?(.+)", line)), None)
 
@@ -107,27 +121,19 @@ def callback1(app):
         [
             dash.dependencies.Input("submit-button", "n_clicks"),
             dash.dependencies.State("input", "value"),
+            dash.dependencies.State("style-dropdown", "value"),
         ],
     )
-    def update_output(n_clicks, code):
+    def update_output(n_clicks, code, style):
         if n_clicks > 0:
+            if style == "Friendly":
+                bug_results = find_bugs(code)
+            elif style == "Technical":
+                bug_results = find_bugs2(code)
 
-            bug_results = find_bugs(code)
             bugs = bug_results.strip().split("\n")
 
             bug_items = map(lambda bug: filter_bug_text(bug), bugs)
-
-            # TODO: add fixing on click or the error and write on output textblock
-            # bug_item = next(
-            #    (bug_item.strip() for bug_item in bug_items if bug_item), None
-            # )
-            #
-            # if bug_item:
-            #    fixed_code = fix_code(code, bug_item)
-
-            # end TODO
-
-            # Checklist
 
             checklist = html.Div(
                 [
@@ -205,14 +211,18 @@ def callback3(app):
             dash.dependencies.Input("fix-button", "n_clicks"),
             dash.dependencies.State("bugs-checklist", "value"),
             dash.dependencies.State("input", "value"),
+            dash.dependencies.State("style-dropdown", "value"),
         ],
     )
-    def get_bug_suggestion(fix_button, bugs_checklist, code):
+    def get_bug_suggestion(fix_button, bugs_checklist, code, style):
         if fix_button > 0:
             print(bugs_checklist)
 
             for bug in bugs_checklist:
-                code = fix_code(code, bug)
+                if style == "Friendly":
+                    code = fix_code(code, bug)
+                elif style == "Technical":
+                    code = fix_code2(code, bug)
 
         return code
 

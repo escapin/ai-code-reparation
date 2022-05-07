@@ -38,6 +38,12 @@ def frontend(app):
                 [
                     dbc.Row(
                         [
+                            dbc.Col(html.P("Message style:"), width="auto"),
+                            dbc.Col(dcc.Dropdown(['Friendly', 'Technical'], 'Technical', id='style-dropdown', clearable=False), width="1")
+                        ]
+                    ),
+                    dbc.Row(
+                        [
                             dbc.Col(
                                 [
                                     html.H2("Original Code"),
