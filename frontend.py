@@ -20,7 +20,7 @@ def frontend(app):
             html.Div(
                 [
                     html.H1(
-                        children="AI-enhanced code analysis and performance",
+                        children="AI-enhanced Code Reparation and Performances",
                         style={
                             "text-align": "center",
                             "font-family": "helvetica",
