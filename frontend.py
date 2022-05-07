@@ -1,3 +1,4 @@
+from logging import PlaceHolder
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -37,16 +38,20 @@ def frontend(app):
                 [
                     dbc.Row(
                         [
-                            dbc.Col(dcc.Textarea(
-                                id="input",
-                                placeholder="Enter your code here...",
-                                style={"width": "100%", "height": "300px"},
-                            )),
-                            dbc.Col(dcc.Textarea(
-                                id="fixed-code",
-                                placeholder="Your fixed code here...",
-                                style={"width": "100%", "height": "300px"},
-                            ))
+                            dbc.Col(
+                                dcc.Textarea(
+                                    id="input",
+                                    placeholder="Enter your code here...",
+                                    style={"width": "100%", "height": "300px"},
+                                )
+                            ),
+                            dbc.Col(
+                                dcc.Textarea(
+                                    id="fixed-code",
+                                    placeholder="Your fixed code here...",
+                                    style={"width": "100%", "height": "300px"},
+                                )
+                            ),
                         ],
                     ),
                     html.Button(
@@ -66,10 +71,27 @@ def frontend(app):
                             "cursor": "pointer",
                         },
                     ),
+                    html.Button(
+                        id="apply-button",
+                        n_clicks=0,
+                        children="Apply",
+                        style={
+                            "background-color": "lightgreen",
+                            "border": "none",
+                            "color": "black",
+                            "padding": "15px 32px",
+                            "text-align": "center",
+                            "text-decoration": "none",
+                            "display": "inline-block",
+                            "font-size": "16px",
+                            "margin": "4px 2px",
+                            "cursor": "pointer",
+                        },
+                    ),
+                    html.Div(id="output-container"),
                 ],
                 className="row",
                 style={"margin": "30px"},
             ),
-            html.Div(id="output-container", children=[], style={"margin": "30px"}),
         ]
     )

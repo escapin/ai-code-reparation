@@ -3,7 +3,7 @@ import random
 import dash_bootstrap_components as dbc
 
 from frontend import frontend
-from callbacks import callback1
+from callbacks import callback1, callback2
 
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 
@@ -15,6 +15,7 @@ frontend(app)
 
 # load the callbacks
 callback1(app)
+callback2(app)
 
 
 if __name__ == "__main__":
